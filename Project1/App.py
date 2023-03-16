@@ -16,6 +16,7 @@ def createTable(x,y):
     return t
 
 
+
 def newLine():
     print ("Enter verticle coordinate for line start: ")
     x=int(input())
@@ -35,9 +36,9 @@ def newLine():
 def updateTable(line,table): 
     for i in range(table.getSize()):
         if line.getStart()[0]==table.getValue(i)[0] and line.getStart()[1]==table.getValue(i)[1]:
-            table.changeSymbol(i,"X")
+            table.changeSymbol(i,"x")
         if line.getEnd()[0]==table.getValue(i)[0] and line.getEnd()[1]==table.getValue(i)[1]:
-            table.changeSymbol(i,"X")
+            table.changeSymbol(i,"x")
 
 
     
@@ -50,25 +51,32 @@ def used(line): ##returning None
             
             return False
 
-def turn(player,table):
+def turn(table,t):
+     
     x=newLine() ##Good 
     print(x.validLine()) ##Returning a value but not the right one
     print (used(x)) ##returning None
     while used(x)==True:
+        print("Enter a valid unused line ")
         x=newLine()
         print(x.printLine())
-        print("Enter a valid line ")
+        
     lines.append(x.list())
     updateTable(x,table) ##Good
     print("lines: ",lines)
     print("used",used(x))
+    player+=1
     if square(x): ##Returning None
-        player+=1
+        if t%2==0:
+            player1+=1
+        else:
+            player2+=1
+        
     
     print ("square", square(x), "score", player)
     table.printTable()
     
-def square(l): ##Returning None
+def square(l): 
     for i in range (len(lines)): 
         if lines[i]==[l.list()[0],l.list()[1],l.list()[2],l.list()[3]-1] and lines[i]==[l.list()[0],l.list()[1],l.list()[2]+1,l.list()[3]] and lines()[i]==[l.list()[0],l.list()[1]+1,l.list()[2]+1,l.list()[3]]:
                     return True
@@ -84,7 +92,7 @@ def square(l): ##Returning None
 def endGame(table): ##Returning None
     count=0
     end=False
-    size=table.getSize()
+    size=table.getSize()-1
     for i in range (size):
         if table.getValue(i)=="X":
             count+=1
@@ -105,16 +113,11 @@ def main():
     end=False
     
     while (end==False):
-        if t%2==0:
-            p=player1
-            print("Player 1 turn: ")
-        else:
-            p=player2
-            print("player 2 turn: ")
-        
-        turn(p,table)
+      
+        turn(table,t)
         t+=1
         print(t)
+        print(end)
         
         end=endGame(table)
    
