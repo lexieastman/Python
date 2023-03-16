@@ -1,4 +1,3 @@
-
 from Line import Line
 from Table import Table
 
@@ -42,30 +41,47 @@ def updateTable(line,table):
 
 
     
-def used(line):
+def used(line): ##returning None
+    flag=False
     for i in range (len(lines)):
         if line.list()==lines[i]:
-            flag= True
+            return True
         else: 
-            lines.append(line)
-            flag=False
-        return flag
+            
+            return False
 
 def turn(player,table):
-    x=newLine()
-    print(x.validLine())
-    
+    x=newLine() ##Good 
+    print(x.validLine()) ##Returning a value but not the right one
+    print (used(x)) ##returning None
     while used(x)==True:
         x=newLine()
         print(x.printLine())
         print("Enter a valid line ")
+    lines.append(x.list())
+    updateTable(x,table) ##Good
+    print("lines: ",lines)
+    print("used",used(x))
+    if square(x): ##Returning None
+        player+=1
     
-    updateTable(x,table)
-    
+    print ("square", square(x), "score", player)
     table.printTable()
-
+    
+def square(l): ##Returning None
+    for i in range (len(lines)): 
+        if lines[i]==[l.list()[0],l.list()[1],l.list()[2],l.list()[3]-1] and lines[i]==[l.list()[0],l.list()[1],l.list()[2]+1,l.list()[3]] and lines()[i]==[l.list()[0],l.list()[1]+1,l.list()[2]+1,l.list()[3]]:
+                    return True
+        elif lines[i]==[l.list()[0],l.list()[1],l.list()[2]-1,l.list()[3]+1] and lines[i]==[l.list()[0]+1,l.list()[1],l.list()[2],l.list()[3]+1] and lines[i]==[l.list()[0],l.list()[1]+1,l.list()[2],l.list()[3]+1]:
+                    return True
+        elif lines[i]==[l.list()[0]-1,l.list()[1],l.list()[2]-1,l.list()[3]] and lines[i]==[l.list()[0]-1,l.list()[1],l.list()[2],l.list()[3]-1] and lines[i]==[l.list()[0]-1,l.list()[1]+1,l.list()[2],l.list()[3]]:
+                    return True
+        elif lines[i]==[l.list()[0],l.list()[1]-1,l.list()[2]-1,l.list()[3]] and lines[i]==[l.list()[0],l.list()[1]-1,l.list()[2],l.list()[3]-1] and lines[i]==[l.list()[0]+1,l.list()[1]-1,l.list()[2],l.list()[3]]:
+                    return True
+        else:
+             return False
    
-def endGame(table):
+def endGame(table): ##Returning None
     count=0
     end=False
     size=table.getSize()
@@ -87,10 +103,8 @@ def main():
     print(table.getSize())
     t =0
     end=False
-   
-   
-
-    while (endGame(table)==False):
+    
+    while (end==False):
         if t%2==0:
             p=player1
             print("Player 1 turn: ")
@@ -100,6 +114,9 @@ def main():
         
         turn(p,table)
         t+=1
+        print(t)
+        
+        end=endGame(table)
    
 
     print("Score: ")
