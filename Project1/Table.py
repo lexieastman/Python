@@ -1,4 +1,5 @@
-class Table: 
+
+     class Table: 
 
     __size=0
     __veticle=None
@@ -50,6 +51,15 @@ class Table:
     
     def getValue(self, i):
         return self.__list[i]
+    
+    def getWidth(self):
+        return self.__horizontal
+
+
+            
+
+
+
 
 
             
